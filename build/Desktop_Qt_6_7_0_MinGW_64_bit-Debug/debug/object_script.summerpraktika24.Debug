@@ -1,0 +1,10 @@
+debug/main.o
+debug/okno1.o
+debug/okno2.o
+debug/okno3.o
+debug/okno4.o
+debug/qrc_kartinki.o
+debug/moc_okno1.o
+debug/moc_okno2.o
+debug/moc_okno3.o
+debug/moc_okno4.o

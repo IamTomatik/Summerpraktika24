@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>kartiki/free-icon-font-angle-right (1).png</file>
+        <file>kartiki/free-icon-font-angle-right (2).png</file>
+        <file>kartiki/free-icon-font-angle-right.png</file>
+        <file>kartiki/free-icon-font-arrow-small-right.png</file>
+        <file>kartiki/free-icon-font-camera-movie.png</file>
+        <file>kartiki/cinema.png</file>
+        <file>kartiki/theatre (1).png</file>
+        <file>kartiki/theatre.png</file>
+    </qresource>
+</RCC>
