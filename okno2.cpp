@@ -26,6 +26,7 @@ void LightSystem::brighten() {
 HomeTheaterFacade::HomeTheaterFacade() {}
 
 void HomeTheaterFacade::watchMovie(const QString &movieTitle) {
+    title = movieTitle;
     QString message = QString("Подготовка к просмотру фильма '%1'...").arg(movieTitle);
     QMessageBox::information(nullptr, "Начало просмотра", message);
     tv.on();
@@ -34,13 +35,14 @@ void HomeTheaterFacade::watchMovie(const QString &movieTitle) {
     QMessageBox::information(nullptr, "Готово к просмотру", "Готово к просмотру фильма!");
 }
 
-void HomeTheaterFacade::endMovie(const QString &movieTitle) {
-    QString message = QString("Завершение просмотра фильма '%1'...").arg(movieTitle);
+void HomeTheaterFacade::endMovie() {
+    QString message = QString("Завершение просмотра фильма '%1'...").arg(title);
     QMessageBox::information(nullptr, "Завершение просмотра", message);
     tv.off();
     soundSystem.off();
     lightSystem.brighten();
     QMessageBox::information(nullptr, "Фильм закончен", "Фильм закончен");
+    title.clear();
 }
 
 okno2::okno2(QWidget *parent)
@@ -48,6 +50,7 @@ okno2::okno2(QWidget *parent)
     , ui(new Ui::okno2)
 {
     ui->setupUi(this);
+    status  = 0;
     QStringList items1 = {"фильм","сериал","мультфильм",};
     ui->comboBox->addItems(items1);
 
@@ -129,13 +132,33 @@ void okno2::updateComboBox_3()
 
 void okno2::startMovie()
 {
-    QString movieTitle = ui->comboBox_3->currentText();
-    homeTheater.watchMovie(movieTitle);
+    if (status == 0){
+        QString movieTitle = ui->comboBox_3->currentText();
+        if(movieTitle.isEmpty()){
+            (QMessageBox::warning(nullptr, "Ошибка", "Пожалуйста, выберите название фильма перед началом просмотра."));
+            return;
+        }
+        homeTheater.watchMovie(movieTitle);
+        ui->startMovieButton->setEnabled(false);
+        ui->endMovieButton->setEnabled(true);
+        status =1;
+        ui->comboBox->setEnabled(false);
+        ui->comboBox_2->setEnabled(false);
+        ui->comboBox_3->setEnabled(false);
+    }
 }
 
 void okno2::endMovie()
 {
-    QString movieTitle = ui->comboBox_3->currentText();
-    homeTheater.endMovie(movieTitle);
+    if(status == 1){
+        homeTheater.endMovie();
+        ui->endMovieButton->setEnabled(false);
+        ui->startMovieButton->setEnabled(true);
+        status = 0;
+        ui->comboBox->setEnabled(true);
+        ui->comboBox_2->setEnabled(true);
+        ui->comboBox_3->setEnabled(true);
+    }
+
 }
 

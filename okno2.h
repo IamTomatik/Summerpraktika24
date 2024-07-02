@@ -26,11 +26,12 @@ private:
     TV tv;
     SoundSystem soundSystem;
     LightSystem lightSystem;
+    QString title;
 
 public:
     HomeTheaterFacade();
     void watchMovie(const QString &movieTitle);
-    void endMovie(const QString &movieTitle);
+    void endMovie();
 };
 
 namespace Ui {
@@ -54,5 +55,6 @@ private slots:
 
 private:
     Ui::okno2 *ui;
+    int status;
 };
 #endif // OKNO2_H
